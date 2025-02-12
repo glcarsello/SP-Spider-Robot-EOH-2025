@@ -1,0 +1,90 @@
+#include <Servo.h>  
+
+Servo S_A1, S_A2, S_A3, S_B1, S_B2, S_B3, S_C1, S_C2, S_C3, S_D1, S_D2, S_D3;  
+const int buttonPin = 2;  
+bool pressed = false;    
+
+void setup() {
+    pinMode(buttonPin, INPUT_PULLUP);  // Enable internal pull-up resistor
+
+    S_A1.attach(3);  S_A2.attach(4);  S_A3.attach(5);  
+    S_B1.attach(6);  S_B2.attach(7);  S_B3.attach(8);  
+    S_C1.attach(9);  S_C2.attach(10); S_C3.attach(11);  
+    S_D1.attach(12); S_D2.attach(13); S_D3.attach(14);  
+
+    resetServos(); 
+}
+
+void loop() {
+    pressed = digitalRead(buttonPin) == LOW;  // Button is active LOW
+
+    if (pressed) { 
+        step_A(); 
+        step_B(); 
+    }
+}
+
+void lift(Servo a, Servo b, Servo c) {
+    for (int pos = 0; pos <= 15; pos++) { 
+        a.write(pos);
+        b.write(pos); 
+        c.write(pos); 
+        delay(50); 
+    }
+}
+
+void forwards(Servo a, Servo b, Servo c) {
+    for (int pos = 0; pos <= 30; pos++) { 
+        a.write(pos);
+        b.write(pos); 
+        c.write(pos); 
+        delay(50); 
+    }
+}
+
+void drop(Servo a, Servo b, Servo c) {
+    for (int pos = 15; pos >= 0; pos--) { 
+        a.write(pos);
+        b.write(pos); 
+        c.write(pos); 
+        delay(50);
+    }
+} 
+
+void backwards(Servo a, Servo b, Servo c) {
+    for (int pos = 30; pos >= 0; pos--) { 
+        a.write(pos);
+        b.write(pos); 
+        c.write(pos); 
+        delay(50);
+    }
+} 
+
+void step_A() {
+    forwards(S_B1, S_B2, S_B3); 
+    delay(300); 
+    lift(S_C1, S_C2, S_C3);
+    delay(300); 
+    forwards(S_A1, S_A2, S_A3); 
+    delay(300);  
+    drop(S_C1, S_C2, S_C3); 
+    delay(300);  
+}
+
+void step_B() {
+    forwards(S_A1, S_A2, S_A3);
+    delay(300);  
+    lift(S_D1, S_D2, S_D3);
+    delay(300); 
+    forwards(S_B1, S_B2, S_B3); 
+    delay(300); 
+    drop(S_D1, S_D2, S_D3); 
+    delay(300); 
+}
+
+void resetServos() {
+    S_A1.write(0);  S_A2.write(0);  S_A3.write(0);
+    S_B1.write(0);  S_B2.write(0);  S_B3.write(0);
+    S_C1.write(0);  S_C2.write(0);  S_C3.write(0);
+    S_D1.write(0);  S_D2.write(0);  S_D3.write(0);
+}
