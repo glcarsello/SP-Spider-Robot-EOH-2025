@@ -1,0 +1,126 @@
+// use this rn yk
+#include <DabbleESP32.h>
+#include <ESP32Servo.h>
+
+// Define PWM-capable GPIO pins for servo control
+#define PIN_1 13  // ✅ PWM OK
+#define PIN_2 4   //  ✅ PWM OK
+#define PIN_3 14  // ✅ PWM OK
+#define PIN_4 27  // ✅ PWM OK
+#define PIN_5 26  // ✅ PWM OK
+#define PIN_6 25  // ✅ PWM OK
+#define PIN_7 33  // ✅ PWM OK
+#define PIN_8 32  // ✅ PWM OK
+#define PIN_9 19  // ✅ PWM OK (Replacing GPIO 35)
+#define PIN_10 22 // ✅ PWM OK (Replacing GPIO 34)
+#define PIN_11 5  // ✅ PWM OK
+#define PIN_12 18 // ✅ PWM OK
+
+// Servo definitions
+// ok bet 
+
+Servo leftFrontA;
+Servo leftFrontB;
+
+Servo leftMiddleA;
+Servo leftMiddleB;
+
+Servo leftBackA;
+Servo leftBackB;
+
+Servo rightFrontA;
+Servo rightFrontB;
+
+Servo rightMiddleA;
+Servo rightMiddleB;
+
+Servo rightBackA;
+Servo rightBackB;
+
+
+void setup() {
+    Serial.begin(115200);
+
+    leftFrontA.attach(PIN_1);
+    leftFrontB.attach(PIN_2);
+    leftMiddleA.attach(PIN_3);
+    leftMiddleB.attach(PIN_4);
+    leftBackA.attach(PIN_5);
+    leftBackB.attach(PIN_6);
+    rightFrontA.attach(PIN_7);
+    rightFrontB.attach(PIN_8);
+    rightMiddleA.attach(PIN_9);
+    rightMiddleB.attach(PIN_10);
+    rightBackA.attach(PIN_11);
+    rightBackB.attach(PIN_12);
+    
+    Dabble.begin("ESP32_Dabble");  // Initialize Dabble Bluetooth
+
+  leftFrontA.write(90);
+ leftFrontB.write(90);
+ leftMiddleA.write(90);
+ leftMiddleB.write(90);
+ leftBackA.write(90);
+ leftBackB.write(90);
+ rightFrontA.write(90);
+ rightFrontB.write(90);
+ rightMiddleA.write(90);
+ rightMiddleB.write(90);
+ rightBackA.write(90);
+ rightBackB.write(90);
+}
+
+void loop() {
+    Dabble.processInput();  // Process Dabble app inputs
+
+    // If "Cross" button is pressed, move servo to 0°
+    if (GamePad.isCrossPressed()) {
+        Serial.println("Move Back");
+
+        lift(leftFrontB, leftBackB, rightMiddleB);
+        forwards(rightFrontA, rightBackA, leftMiddleA); 
+        backwards(leftFrontA, leftBackA, rightMiddleA); 
+        drop(leftFrontB, leftBackB, rightMiddleB);
+
+        lift(rightFrontB, rightBackB, leftMiddleB);
+        forwards(leftFrontA, leftBackA, rightMiddleA); 
+        backwards(rightFrontA, rightBackA, leftMiddleA); 
+        drop(rightFrontB, rightBackB, leftMiddleB);
+ 
+    }
+
+    // If "Circle" button is pressed, move servo to 180°
+    if (GamePad.isCirclePressed()) {
+        Serial.println("Servo moved to 180°");
+    }
+  
+    
+}
+
+
+
+
+void lift(Servo a, Servo b, Servo c) {
+        a.write(120);
+        b.write(120); 
+        c.write(120);
+}
+
+void forwards(Servo a, Servo b, Servo c) {
+        a.write(120);
+        b.write(120); 
+        c.write(120); 
+    
+}
+
+void drop(Servo a, Servo b, Servo c) {
+        a.write(90);
+        b.write(90); 
+        c.write(90); 
+} 
+
+void backwards(Servo a, Servo b, Servo c) {
+        a.write(60);
+        b.write(60); 
+        c.write(60);
+} 
