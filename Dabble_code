@@ -1,4 +1,3 @@
-// use this rn yk
 #include <DabbleESP32.h>
 #include <ESP32Servo.h>
 
@@ -17,30 +16,26 @@
 #define PIN_12 18 // ✅ PWM OK
 
 // Servo definitions
-// ok bet 
+Servo leftFrontA, leftFrontB;
+Servo leftMiddleA, leftMiddleB;
+Servo leftBackA, leftBackB;
+Servo rightFrontA, rightFrontB;
+Servo rightMiddleA, rightMiddleB;
+Servo rightBackA, rightBackB;
 
-Servo leftFrontA;
-Servo leftFrontB;
+// Things to know
+// Servo label A - means left to right motion
+// Servo label B - means up and down motion
 
-Servo leftMiddleA;
-Servo leftMiddleB;
+// THIS IS ALL FOR SERVOS A
+// NOT the direction of the left front leg motion it goes backwward
 
-Servo leftBackA;
-Servo leftBackB;
-
-Servo rightFrontA;
-Servo rightFrontB;
-
-Servo rightMiddleA;
-Servo rightMiddleB;
-
-Servo rightBackA;
-Servo rightBackB;
-
+// NOT the direction of middle left for right front leg motion
 
 void setup() {
     Serial.begin(115200);
 
+    // Attach servos to their respective pins
     leftFrontA.attach(PIN_1);
     leftFrontB.attach(PIN_2);
     leftMiddleA.attach(PIN_3);
@@ -56,71 +51,80 @@ void setup() {
     
     Dabble.begin("ESP32_Dabble");  // Initialize Dabble Bluetooth
 
-  leftFrontA.write(90);
- leftFrontB.write(90);
- leftMiddleA.write(90);
- leftMiddleB.write(90);
- leftBackA.write(90);
- leftBackB.write(90);
- rightFrontA.write(90);
- rightFrontB.write(90);
- rightMiddleA.write(90);
- rightMiddleB.write(90);
- rightBackA.write(90);
- rightBackB.write(90);
+    // Initialize servos to 90° (neutral position)
+
+    leftFrontB.write(90);
+    leftMiddleA.write(90);
+    leftMiddleB.write(90);
+    leftBackA.write(90);
+    leftBackB.write(90);
+    rightFrontB.write(90);
+    rightMiddleA.write(90);
+    rightMiddleB.write(90);
+    rightBackA.write(90);
+    rightBackB.write(90);
+    leftFrontA.write(150); 
+    rightFrontA.write(150); 
+    
+delay(1000);
 }
 
 void loop() {
     Dabble.processInput();  // Process Dabble app inputs
 
-    // If "Cross" button is pressed, move servo to 0°
-    if (GamePad.isCrossPressed()) {
-        Serial.println("Move Back");
+ while (GamePad.isCrossPressed()) {
+// start off on the right foot lift
+        rightFrontB.write(15);
+        leftMiddleB.write(15);
+        rightBackB.write(15);
+        printf("right foot lift motion");
+delay(500);
+// move the three legs to the position yk ONE SIDE WILL PROB BE  FUCKED WILL CHANGE TRUST
+rightFrontA.write(120);
+        leftMiddleA.write(60);
+        rightBackA.write(120);
+        printf("right leg move the leg");
+delay(500);
+  // put the legs down
+rightFrontB.write(90);
+        leftMiddleB.write(90);
+        rightBackB.write(90);
+        printf("put the legs down");
+delay(500);
+// drags the fucking legs back into place
+rightFrontA.write(90);
+        leftMiddleA.write(90);
+        rightBackA.write(90);
+        printf("drag the leg back");
+delay(500);
 
-        lift(leftFrontB, leftBackB, rightMiddleB);
-        forwards(rightFrontA, rightBackA, leftMiddleA); 
-        backwards(leftFrontA, leftBackA, rightMiddleA); 
-        drop(leftFrontB, leftBackB, rightMiddleB);
+// ok now do the same thing for the starting left leg now (lift)
+          leftFrontB.write(15);
+        rightMiddleB.write(15);
+        leftBackB.write(15);
+        printf("left foot lift motion");
+        delay(500);
 
-        lift(rightFrontB, rightBackB, leftMiddleB);
-        forwards(leftFrontA, leftBackA, rightMiddleA); 
-        backwards(rightFrontA, rightBackA, leftMiddleA); 
-        drop(rightFrontB, rightBackB, leftMiddleB);
- 
-    }
+// ok now move the three legs to the position (one again one side will be cooked)
+  leftFrontA.write(60);
+        rightMiddleA.write(120);
+        leftBackA.write(60);
+        printf("left leg move the leg");
+delay(500);
 
-    // If "Circle" button is pressed, move servo to 180°
-    if (GamePad.isCirclePressed()) {
-        Serial.println("Servo moved to 180°");
-    }
-  
-    
+// ok now put the legs down
+          leftFrontB.write(90);
+        rightMiddleB.write(90);
+        leftBackB.write(90);
+        printf("left leg put the leg down");
+        delay(500);
+
+// drags the fucking legs into place
+leftFrontA.write(90);
+        rightMiddleA.write(90);
+        leftBackA.write(90);
+        printf("left leg drag the leg back");
+delay(500);
+
 }
-
-
-
-
-void lift(Servo a, Servo b, Servo c) {
-        a.write(120);
-        b.write(120); 
-        c.write(120);
 }
-
-void forwards(Servo a, Servo b, Servo c) {
-        a.write(120);
-        b.write(120); 
-        c.write(120); 
-    
-}
-
-void drop(Servo a, Servo b, Servo c) {
-        a.write(90);
-        b.write(90); 
-        c.write(90); 
-} 
-
-void backwards(Servo a, Servo b, Servo c) {
-        a.write(60);
-        b.write(60); 
-        c.write(60);
-} 
