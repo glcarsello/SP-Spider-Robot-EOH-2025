@@ -63,8 +63,8 @@ void setup() {
     rightMiddleB.write(90);
     rightBackA.write(90);
     rightBackB.write(90);
-    leftFrontA.write(150); 
-    rightFrontA.write(150); 
+    leftFrontA.write(90); 
+    rightFrontA.write(90); 
     
 delay(1000);
 }
@@ -73,106 +73,101 @@ void loop() {
     Dabble.processInput();  // Process Dabble app inputs
 
  if (GamePad.isCrossPressed()) {
-  while (GamePad.isCrossPressed()){
-    
-  }
   
 // start off on the right foot lift
-        rightFrontB.write(15);              //shouldn't it be greater than 90 to lift not less than
+        rightFrontB.write(165);              //shouldn't it be greater than 90 to lift not less than
         leftMiddleB.write(15);
-        rightBackB.write(15);
+        rightBackB.write(165);
         printf("right foot lift motion");
-delay(500);
+ delay(200);
 // move the three legs to the position yk ONE SIDE WILL PROB BE  FUCKED WILL CHANGE TRUST
 rightFrontA.write(120);
         leftMiddleA.write(60);  //why is this only 60 gangster
         rightBackA.write(120);
         printf("right leg move the leg");
-delay(500);
+ delay(200);
   // put the legs down
 rightFrontB.write(90);
         leftMiddleB.write(90);
         rightBackB.write(90);
         printf("put the legs down");
-delay(500);
+ delay(200);
 // drags the fucking legs back into place
 rightFrontA.write(90);
         leftMiddleA.write(90);
         rightBackA.write(90);
         printf("drag the leg back");
-delay(500);
+ delay(200);
 
 // ok now do the same thing for the starting left leg now (lift)
           leftFrontB.write(15);
-        rightMiddleB.write(15);
+        rightMiddleB.write(165);
         leftBackB.write(15);
         printf("left foot lift motion");
-        delay(500);
+        delay(200);
 
 // ok now move the three legs to the position (one again one side will be cooked)
   leftFrontA.write(60);
         rightMiddleA.write(120);  //why are they even I can't understand help
         leftBackA.write(60);
         printf("left leg move the leg");
-delay(500);
+delay(200);
 
 // ok now put the legs down
           leftFrontB.write(90);
         rightMiddleB.write(90);
         leftBackB.write(90);
         printf("left leg put the leg down");
-        delay(500);
+        delay(200);
 
 // drags the fucking legs into place
 leftFrontA.write(90);
         rightMiddleA.write(90);
         leftBackA.write(90);
         printf("left leg drag the leg back");
-delay(500);
+delay(200);
 
 }
 
 //this gibberish is going to execute a perfect left turn with my boy
 if (GamePad.isSquarePressed()){
-  while (GamePad.isSquarePressed()){
-    
-  }
+  
   //lift front two legs
   leftFrontB.write(120);
   rightFrontB.write(120);
-
+  delay(200);
   //turn front two legs (left twist back right twist forwards)
   leftFrontA.write(45);
   rightFrontA.write(125);
-
+  delay(200);
   //put em back down
   leftFrontB.write(90);
   rightFrontB.write(90);
-
+  delay(200);
   //lift middle two legs
   leftMiddleB.write(120);
   rightMiddleB.write(120);
-
+  delay(200);
   //turn middle two legs (left twist back right twist forwards)
   leftMiddleA.write(45);
   rightMiddleA.write(125);
-
+  delay(200);
     //put em back down
   leftMiddleB.write(90);
   rightMiddleB.write(90);
-
+  delay(200);
   //lift back two legs
   leftBackB.write(120);
   rightBackB.write(120);
-
+  delay(200);
   //turn back two legs (left twist back right twist forwards)
   leftBackA.write(45);
   rightBackA.write(125);
-
+  delay(200);
     //put em back down
   leftBackB.write(90);
   rightBackB.write(90);
-
+  delay(200);
   //this gonna be the most scuffed thing of all time but thet're all gonna rotate back into place together
   leftFrontA.write(90);
   rightFrontA.write(90);
@@ -180,6 +175,7 @@ if (GamePad.isSquarePressed()){
   rightMiddleA.write(90);
   leftBackA.write(90);
   rightBackA.write(90);
+  delay(200);
 }
 
 //opposite of our beautiful and perfect turn left method once its tested
@@ -193,6 +189,8 @@ delay(100);
 leftFrontB.write(90);
 leftMiddleB.write(90);
 }
+
+
 //opposite of our absolutely scrumptious backwards sweet child method once it is verified physically by the spoody spider
 while (GamePad.isTrianglePressed()){
   
