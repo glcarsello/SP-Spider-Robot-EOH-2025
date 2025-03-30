@@ -132,9 +132,9 @@ delay(200);
 if (GamePad.isTrianglePressed()) {
   
 // start off on the right foot lift
-        rightFrontB.write(15);              //shouldn't it be greater than 90 to lift not less than
-        leftMiddleB.write(165);
-        rightBackB.write(15);
+      rightFrontB.write(165);              //shouldn't it be greater than 90 to lift not less than
+        leftMiddleB.write(15);
+        rightBackB.write(165);
         printf("right foot lift motion");
  delay(200);
 // move the three legs to the position yk ONE SIDE WILL PROB BE  FUCKED WILL CHANGE TRUST
@@ -157,11 +157,12 @@ rightFrontA.write(90);
  delay(200);
 
 // ok now do the same thing for the starting left leg now (lift)
-          leftFrontB.write(165);
-        rightMiddleB.write(15);
-        leftBackB.write(165);
+  leftFrontB.write(15);
+        rightMiddleB.write(165);
+        leftBackB.write(15);
         printf("left foot lift motion");
         delay(200);
+        
 
 // ok now move the three legs to the position (one again one side will be cooked)
   leftFrontA.write(120);
