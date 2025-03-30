@@ -196,9 +196,9 @@ rightMiddleB.write(165);
 leftBackB.write(15); 
 delay(500);
 //turn left backwards, right forward 
-leftFrontA.write(45);
-rightMiddleA.write(135); 
-leftBackA.write(45);
+leftFrontA.write(120);
+rightMiddleA.write(60); 
+leftBackA.write(120);
 delay(500);
 //put em back down
 leftFrontB.write(90);
@@ -211,9 +211,9 @@ leftMiddleB.write(15);
 rightBackB.write(165); 
 delay(500);
 //turn left backwards, right forward 
-rightFrontA.write(135);
-leftMiddleA.write(45); 
-rightBackA.write(135);
+rightFrontA.write(60);
+leftMiddleA.write(120); 
+rightBackA.write(60);
 delay(500);
  //put em back down
 rightFrontB.write(90);
