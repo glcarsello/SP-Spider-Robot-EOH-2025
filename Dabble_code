@@ -131,7 +131,6 @@ delay(200);
 
 //this gibberish is going to execute a perfect left turn with my boy
 if (GamePad.isSquarePressed()){
- if (GamePad.isSquarePressed()){ 
   //lift first triangle
   leftFrontB.write(50);
   rightMiddleB.write(130); 
