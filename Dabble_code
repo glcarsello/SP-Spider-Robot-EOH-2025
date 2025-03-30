@@ -129,6 +129,64 @@ delay(200);
 
 }
 
+if (GamePad.isTrianglePressed()) {
+  
+// start off on the right foot lift
+        rightFrontB.write(15);              //shouldn't it be greater than 90 to lift not less than
+        leftMiddleB.write(165);
+        rightBackB.write(15);
+        printf("right foot lift motion");
+ delay(200);
+// move the three legs to the position yk ONE SIDE WILL PROB BE  FUCKED WILL CHANGE TRUST
+rightFrontA.write(60);
+        leftMiddleA.write(120);  //why is this only 60 gangster
+        rightBackA.write(60);
+        printf("right leg move the leg");
+ delay(200);
+  // put the legs down
+rightFrontB.write(90);
+        leftMiddleB.write(90);
+        rightBackB.write(90);
+        printf("put the legs down");
+ delay(200);
+// drags the fucking legs back into place
+rightFrontA.write(90);
+        leftMiddleA.write(90);
+        rightBackA.write(90);
+        printf("drag the leg back");
+ delay(200);
+
+// ok now do the same thing for the starting left leg now (lift)
+          leftFrontB.write(165);
+        rightMiddleB.write(15);
+        leftBackB.write(165);
+        printf("left foot lift motion");
+        delay(200);
+
+// ok now move the three legs to the position (one again one side will be cooked)
+  leftFrontA.write(120);
+        rightMiddleA.write(60);  //why are they even I can't understand help
+        leftBackA.write(120);
+        printf("left leg move the leg");
+delay(200);
+
+// ok now put the legs down
+          leftFrontB.write(90);
+        rightMiddleB.write(90);
+        leftBackB.write(90);
+        printf("left leg put the leg down");
+        delay(200);
+
+// drags the fucking legs into place
+leftFrontA.write(90);
+        rightMiddleA.write(90);
+        leftBackA.write(90);
+        printf("left leg drag the leg back");
+delay(200);
+
+}
+
+
 //this gibberish is going to execute a perfect left turn with my boy
 if (GamePad.isSquarePressed()){ 
 //lift first triangle
