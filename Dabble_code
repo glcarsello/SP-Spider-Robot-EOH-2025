@@ -190,9 +190,9 @@ delay(200);
 //this gibberish is going to execute a perfect left turn with my boy
 if (GamePad.isSquarePressed()){ 
 //lift first triangle
-leftFrontB.write(50);
-rightMiddleB.write(130); 
-leftBackB.write(50); 
+leftFrontB.write(15);
+rightMiddleB.write(165); 
+leftBackB.write(15); 
 delay(200);
 //turn left backwards, right forward 
 leftFrontA.write(45);
@@ -205,9 +205,9 @@ rightMiddleB.write(90);
 leftBackB.write(90); 
 delay(200);
 //lift second triangle
-rightFrontB.write(130);
-leftMiddleB.write(50); 
-rightBackB.write(130); 
+rightFrontB.write(165);
+leftMiddleB.write(15); 
+rightBackB.write(165); 
 delay(200);
 //turn left backwards, right forward 
 rightFrontA.write(45);
