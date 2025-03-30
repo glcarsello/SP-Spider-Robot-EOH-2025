@@ -194,32 +194,32 @@ if (GamePad.isSquarePressed()){
 leftFrontB.write(15);
 rightMiddleB.write(165); 
 leftBackB.write(15); 
-delay(200);
+delay(500);
 //turn left backwards, right forward 
 leftFrontA.write(45);
 rightMiddleA.write(135); 
 leftBackA.write(45);
-delay(200);
+delay(500);
 //put em back down
 leftFrontB.write(90);
 rightMiddleB.write(90); 
 leftBackB.write(90); 
-delay(200);
+delay(500);
 //lift second triangle
 rightFrontB.write(165);
 leftMiddleB.write(15); 
 rightBackB.write(165); 
-delay(200);
+delay(500);
 //turn left backwards, right forward 
-rightFrontA.write(45);
-leftMiddleA.write(135); 
-rightBackA.write(45);
-delay(200);
+rightFrontA.write(135);
+leftMiddleA.write(45); 
+rightBackA.write(135);
+delay(500);
  //put em back down
 rightFrontB.write(90);
 leftMiddleB.write(90); 
 rightBackB.write(90); 
-delay(200);
+delay(500);
 }
 
 //opposite of our beautiful and perfect turn left method once its tested
