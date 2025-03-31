@@ -220,6 +220,14 @@ rightFrontB.write(90);
 leftMiddleB.write(90); 
 rightBackB.write(90); 
 delay(500);
+
+leftFrontA.write(90);
+rightMiddleA.write(90); 
+leftBackA.write(90);
+rightFrontA.write(90);
+leftMiddleA.write(90); 
+rightBackA.write(90);
+
 }
 
 //opposite of our beautiful and perfect turn left method once its tested
