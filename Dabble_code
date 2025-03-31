@@ -227,6 +227,7 @@ leftBackA.write(90);
 rightFrontA.write(90);
 leftMiddleA.write(90); 
 rightBackA.write(90);
+delay(500);
 
 }
 
