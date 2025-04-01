@@ -342,9 +342,6 @@ void loop() {
 
 
 
-
-
-
 if (GamePad.isStartPressed()) {
 // go back to initialization state
     leftFrontB.write(90);
@@ -375,14 +372,42 @@ if (GamePad.isStartPressed()) {
 
 
 
-
-// nikhil nambiar job task: write a wave movement and a dance movement get inspiration form online
 // NOTES: try not to run more than 4 Servos at once and use delays to ensure that it all doesn't run all at once
 
-
 if (GamePad.isCrossPressed()) {
-// write code here
+    // Define calibrated neutral B positions
+    int neutralLeftB = 90;
+    int neutralRightB = 90;
+    int liftLeftB = 25;
+    int liftRightB = 155;
+
+    // Left to right wave motion (B servos only)
+    
+    leftFrontB.write(liftLeftB);
+    delay(150);
+    leftFrontB.write(neutralLeftB);
+    
+    leftMiddleB.write(liftLeftB);
+    delay(150);
+    leftMiddleB.write(neutralLeftB);
+    
+    leftBackB.write(liftLeftB);
+    delay(150);
+    leftBackB.write(neutralLeftB);
+
+    rightBackB.write(liftRightB);
+    delay(150);
+    rightBackB.write(neutralRightB);
+
+    rightMiddleB.write(liftRightB);
+    delay(150);
+    rightMiddleB.write(neutralRightB);
+
+    rightFrontB.write(liftRightB);
+    delay(150);
+    rightFrontB.write(neutralRightB);
 }
+
 
 if (GamePad.isCirclePressed()) {
     leftMiddleA.write(130);  // Move left front servo A to 90 degrees
