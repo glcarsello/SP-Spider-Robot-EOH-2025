@@ -84,7 +84,7 @@ void loop() {
 
     if (GamePad.isUpPressed()) {
         // start off on the right foot: lift
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         printf("right foot lift motion");
@@ -105,7 +105,7 @@ void loop() {
         delay(300);
         
 // lift the other legs so not dragging ass: lift
-        leftFrontB.write(25);
+        leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
         delay(300);
@@ -132,7 +132,7 @@ void loop() {
         delay(300);
 
         // lift the other legs so they don't drag ass: lift
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         delay(300);
@@ -159,7 +159,7 @@ void loop() {
     // left turn
     if (GamePad.isLeftPressed()) {
         // lift first triangle
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         delay(300);
@@ -177,7 +177,7 @@ void loop() {
         delay(300);
 
         // lift second triangle
-        leftFrontB.write(25);
+        leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
         delay(300);
@@ -214,7 +214,7 @@ void loop() {
     // left turn
     if (GamePad.isRightPressed()) {
         // lift first triangle
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         delay(300);
@@ -232,7 +232,7 @@ void loop() {
         delay(300);
 
         // lift second triangle
-        leftFrontB.write(25);
+        leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
         delay(300);
@@ -266,7 +266,7 @@ void loop() {
 
     if (GamePad.isDownPressed()) {
         // start off on the right foot lift
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         printf("right foot lift motion");
@@ -287,7 +287,7 @@ void loop() {
         delay(300);
         
 // lift the other legs so not dragging ass
-        leftFrontB.write(25);
+        leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
         delay(300);
@@ -314,7 +314,7 @@ void loop() {
         delay(300);
 
         // lift the other legs so they don't drag ass
-        rightFrontB.write(155);
+        rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         delay(300);
@@ -384,10 +384,10 @@ if (GamePad.isSelectPressed()) {
 
     // 💃 Step 1: Bounce all legs
     for (int i = 0; i < 3; i++) {
-        leftFrontB.write(liftLeftB);
+        leftFrontB.write(155);
         leftMiddleB.write(liftLeftB);
         leftBackB.write(liftLeftB);
-        rightFrontB.write(liftRightB);
+        rightFrontB.write(25);
         rightMiddleB.write(liftRightB);
         rightBackB.write(liftRightB);
         delay(300);
@@ -423,7 +423,7 @@ if (GamePad.isSelectPressed()) {
     // 💃 Step 3: Alternate triangle leg lifts
     for (int i = 0; i < 2; i++) {
         // Lift one triangle
-        leftFrontB.write(liftLeftB);
+        leftFrontB.write(155);
         rightMiddleB.write(liftRightB);
         leftBackB.write(liftLeftB);
         delay(300);
@@ -433,7 +433,7 @@ if (GamePad.isSelectPressed()) {
         delay(300);
 
         // Lift the other triangle
-        rightFrontB.write(liftRightB);
+        rightFrontB.write(25);
         leftMiddleB.write(liftLeftB);
         rightBackB.write(liftRightB);
         delay(300);
@@ -450,7 +450,7 @@ if (GamePad.isSelectPressed()) {
     rightBackA.write(30);
     delay(300);
 
-    leftFrontB.write(liftLeftB);
+    leftFrontB.write(155);
     rightBackB.write(liftRightB);
     delay(300);
 
@@ -480,7 +480,7 @@ if (GamePad.isCrossPressed()) {
 
     // Left to right wave motion (B servos only)
     
-    leftFrontB.write(liftLeftB);
+    leftFrontB.write(155);
     delay(150);
     leftFrontB.write(neutralLeftB);
     
@@ -500,7 +500,7 @@ if (GamePad.isCrossPressed()) {
     delay(150);
     rightMiddleB.write(neutralRightB);
 
-    rightFrontB.write(liftRightB);
+    rightFrontB.write(25);
     delay(150);
     rightFrontB.write(neutralRightB);
 }
@@ -509,10 +509,10 @@ if (GamePad.isCrossPressed()) {
 
 if (GamePad.isTrianglePressed()) {
     // Step 1: Lower the spider (crouch)
-    leftFrontB.write(120);
+    leftFrontB.write(60);
     leftMiddleB.write(120);
     leftBackB.write(120);
-    rightFrontB.write(60);
+    rightFrontB.write(120);
     rightMiddleB.write(60);
     rightBackB.write(60);
     delay(300);
@@ -548,8 +548,8 @@ if (GamePad.isTrianglePressed()) {
 if (GamePad.isCirclePressed()) {
     int neutral = 90;
 
-    int frontLowL = 120;
-    int frontLowR = 60;
+    int frontLowR = 120;
+    int frontLowL = 60;
 
     int midMidL = 105;
     int midMidR = 75;
@@ -560,9 +560,9 @@ if (GamePad.isCirclePressed()) {
     int stepDelay = 10;  // delay between small angle changes
 
     // ---- FRONT DIP ----
-    for (int i = 90; i <= frontLowL; i++) {
-        leftFrontB.write(i);
-        rightFrontB.write(180 - i);
+    for (int i = 90; i <= frontLowR; i++) {
+        rightFrontB.write(i);
+        leftFrontB.write(180 - i);
         delay(stepDelay);
     }
 
@@ -593,9 +593,9 @@ if (GamePad.isCirclePressed()) {
         delay(stepDelay);
     }
 
-    for (int i = frontLowL; i >= 90; i--) {
-        leftFrontB.write(i);
-        rightFrontB.write(180 - i);
+    for (int i = frontLowR; i >= 90; i--) {
+        rightFrontB.write(i);
+        leftFrontB.write(180 - i);
         delay(stepDelay);
     }
 }
@@ -606,6 +606,30 @@ if (GamePad.isCirclePressed()) {
 
 
 if (GamePad.isSquarePressed()) {
+
+       //lift front leg
+       rightFrontB.write(25);
+       delay(300);
+
+       //move front leg
+       rightFrontA.write(60);
+       delay(300);
+
+       //front leg down
+       rightFrontB.write(90);
+       delay(300);
+
+       //lift front leg
+       leftFrontB.write(155);
+       delay(300);
+
+       //move front leg
+       leftFrontA.write(120);
+       delay(300);
+
+       //front leg down
+       leftFrontB.write(90);
+       delay(300);
 
         // start off on the right foot lift
         leftMiddleB.write(25);
@@ -640,30 +664,6 @@ if (GamePad.isSquarePressed()) {
         leftBackB.write(90);
         printf("left leg put the leg down");
         delay(300);
-
-       //lift front leg
-       rightFrontB.write(155);
-       delay(300);
-
-       //move front leg
-       rightFrontA.write(60);
-       delay(300);
-
-       //front leg down
-       rightFrontB.write(90);
-       delay(300);
-
-       //lift front leg
-       leftFrontB.write(25);
-       delay(300);
-
-       //move front leg
-       leftFrontA.write(120);
-       delay(300);
-
-       //front leg down
-       leftFrontB.write(90);
-       delay(300);
        
       //return to normal
       leftFrontA.write(60);
@@ -675,13 +675,9 @@ if (GamePad.isSquarePressed()) {
 }
 }
 
-
-
-
-
-
-
-
-
-
-
+//CHEATCODE FOR SAJ SWEET CHEEKS
+//WHEN WRITING B SERVOS
+//RIGHT BACK AND MIDDLE .write(155) = up
+//LEFT BACK AND MIDDLE .write(25)  = up
+//RIGHT FRONT .write(25) = up
+//LEFT FRONT  .write(155) = up
