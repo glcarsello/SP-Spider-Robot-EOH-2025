@@ -32,6 +32,12 @@ Servo rightBackA, rightBackB;
 
 // NOT the direction of middle left for right front leg motion
 
+unsigned long lastInputTime = 0;
+unsigned long lastIdleActionTime = 0;
+const unsigned long idleThreshold = 60000; // 60s
+
+
+
 void setup() {
     Serial.begin(115200);
 
@@ -81,6 +87,30 @@ delay(1000);
 
 void loop() {
     Dabble.processInput();  // Process Dabble app inputs
+if (GamePad.isUpPressed() || GamePad.isDownPressed() || GamePad.isLeftPressed() || GamePad.isRightPressed() ||
+        GamePad.isStartPressed() || GamePad.isSelectPressed() || GamePad.isCirclePressed() || GamePad.isCrossPressed() ||
+        GamePad.isTrianglePressed() || GamePad.isSquarePressed()) {
+
+        lastInputTime = millis(); // reset user activity timer
+        lastIdleActionTime = millis(); // reset idle animation cycle
+    }
+
+    // If we've been idle for 60s and it's time to run the next idle animation
+    if ((millis() - lastInputTime >= idleThreshold) && (millis() - lastIdleActionTime >= idleThreshold)) {
+        // 🕒 Do the tap dance again
+        rightFrontB.write(25); delay(200);
+        rightFrontB.write(90); delay(200);
+        leftFrontB.write(155); delay(200);
+        leftFrontB.write(90); delay(200);
+        rightFrontB.write(25); delay(200);
+        rightFrontB.write(90); delay(200);
+        leftFrontB.write(155); delay(200);
+        leftFrontB.write(90); delay(200);
+
+        lastIdleActionTime = millis(); // reset animation cycle timestamp
+    }
+
+
 
     if (GamePad.isUpPressed()) {
         // start off on the right foot: lift
@@ -104,7 +134,7 @@ void loop() {
         printf("put the legs down");
         delay(300);
         
-// lift the other legs so not dragging ass: lift
+// lift the other legs so not dragging butt: lift
         leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
@@ -131,7 +161,7 @@ void loop() {
         printf("left leg put the leg down");
         delay(300);
 
-        // lift the other legs so they don't drag ass: lift
+        // lift the other legs so they don't slide
         rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
@@ -150,11 +180,6 @@ void loop() {
         rightBackB.write(90);
         delay(300); 
     }
-
-
-
-
-
 
     // left turn
     if (GamePad.isLeftPressed()) {
@@ -203,13 +228,6 @@ void loop() {
         rightBackA.write(60);
         delay(300);
     }
-
-
-
-
-
-
-
 
     // left turn
     if (GamePad.isRightPressed()) {
@@ -273,7 +291,7 @@ void loop() {
         delay(300);
 
         // move the three legs
-        rightFrontA.write(75);     //changed from 90 to 75 to reach back not as far to stabalize
+        rightFrontA.write(75);     //changed from 90 to 75 to reach back not as far to stabilize
         leftMiddleA.write(120);
         rightBackA.write(30);            //changed to 15 from 30 to reach back further(OLD)
         printf("right leg move the leg");
@@ -286,7 +304,7 @@ void loop() {
         printf("put the legs down");
         delay(300);
         
-// lift the other legs so not dragging ass
+// lift the other legs so they don’t slide
         leftFrontB.write(155);
         rightMiddleB.write(155);
         leftBackB.write(25);
@@ -295,7 +313,7 @@ void loop() {
         // drag the legs back and lift the other legs
         rightFrontA.write(105);              //changed from 120 to 105 to drag back not as far
         leftMiddleA.write(90);
-        rightBackA.write(60);                 //changed from 60 to 45 to stay further back to stabalize(OLD)
+        rightBackA.write(60);                 //changed from 60 to 45 to stay further back to stabilize(OLD)
         printf("drag the leg back and lift the other legs");
         delay(300);
 
@@ -313,16 +331,16 @@ void loop() {
         printf("left leg put the leg down");
         delay(300);
 
-        // lift the other legs so they don't drag ass
+        // lift the other legs so they don't slide
         rightFrontB.write(25);
         leftMiddleB.write(25);
         rightBackB.write(155);
         delay(300);
         
         // drag the legs back and lift other legs
-        leftFrontA.write(75);                //changed from 60 to 75 to drag back not as far to stabalize
+        leftFrontA.write(75);                //changed from 60 to 75 to drag back not as far to stabilize
         rightMiddleA.write(90);
-        leftBackA.write(120);  //changed from 120 to 135 so that it is better stabalized before other legs are put down(OLD)
+        leftBackA.write(120);  //changed from 120 to 135 so that it is better stabilized before other legs are put down(OLD)
         printf("left leg drag the leg back");
         delay(300);
         
@@ -331,48 +349,37 @@ void loop() {
         leftMiddleB.write(90);
         rightBackB.write(90);
 
-                  //KEEP BELOW INITILIZATIONS OR SPIDEY FUCKING DIES
+                  //KEEP BELOW INITIALIZATIONS OR SPIDEY DOESN’T RESET
         
         rightFrontA.write(120); 
         leftFrontA.write(60); 
         delay(300); 
     }
 
-
-
-
-
-
-
 if (GamePad.isStartPressed()) {
 // go back to initialization state
     leftFrontB.write(90);
     leftMiddleB.write(90);
     leftBackB.write(90);
-
+delay(300);
     // right side B servos
     rightFrontB.write(90);
     rightMiddleB.write(90);
     rightBackB.write(90);
-
+delay(300);
 
     // left side A servos
     leftFrontA.write(60); 
     leftMiddleA.write(90);
     leftBackA.write(120);
-
+delay(300);
 
     // right side A servos
     rightFrontA.write(120); 
     rightMiddleA.write(90);
     rightBackA.write(60);
-    
+   delay(300);
 }
-
-
-
-
-
 
 // NOTES: try not to run more than 4 Servos at once and use delays to ensure that it all doesn't run all at once
 
@@ -471,39 +478,42 @@ if (GamePad.isSelectPressed()) {
     rightBackB.write(90);
 }
 
-if (GamePad.isCrossPressed()) {
-    // Define calibrated neutral B positions
+if (GamePad.isCrossPressed()) { // this should be our bouncy lil guy
+        
     int neutralLeftB = 90;
     int neutralRightB = 90;
     int liftLeftB = 25;
     int liftRightB = 155;
 
-    // Left to right wave motion (B servos only)
-    
-    leftFrontB.write(155);
-    delay(150);
-    leftFrontB.write(neutralLeftB);
-    
-    leftMiddleB.write(liftLeftB);
-    delay(150);
-    leftMiddleB.write(neutralLeftB);
-    
-    leftBackB.write(liftLeftB);
-    delay(150);
-    leftBackB.write(neutralLeftB);
 
-    rightBackB.write(liftRightB);
-    delay(150);
-    rightBackB.write(neutralRightB);
+leftFrontB.write(155);      // this should raise all servos high
+        leftMiddleB.write(25);
+        leftBackB.write(25);
+        rightFrontB.write(25);
+        rightMiddleB.write(155);
+        rightBackB.write(155);
+        leftFrontB.write(155);
+        delay(300);
 
-    rightMiddleB.write(liftRightB);
-    delay(150);
-    rightMiddleB.write(neutralRightB);
+        leftFrontB.write(25);     // this should low all servos low
+        leftMiddleB.write(155);
+        leftBackB.write(155);
+        rightFrontB.write(155);
+        rightMiddleB.write(25);
+        rightBackB.write(25);
+        delay(300);
 
-    rightFrontB.write(25);
-    delay(150);
-    rightFrontB.write(neutralRightB);
+
+    leftFrontB.write(90); // this will reset te servos
+    leftMiddleB.write(90);
+    leftBackB.write(90);
+    rightFrontB.write(90);
+    rightMiddleB.write(90);
+    rightBackB.write(90);
+    delay(300);
+
 }
+
 
 
 
@@ -524,7 +534,36 @@ if (GamePad.isTrianglePressed()) {
     rightFrontA.write(150);
     rightMiddleA.write(120);
     rightBackA.write(90);
-    delay(200);
+    delay(300);
+
+// Step 4: SHAKE ASS FOR A REAL ONE MOTHAFUCKAS
+for(int i = 0; i < 2; i++) {  
+  leftFrontA.write(90);
+    leftMiddleA.write(120);
+    leftBackA.write(150);
+    rightFrontA.write(90);
+    rightMiddleA.write(60);
+    rightBackA.write(30);
+    delay(350);
+
+ leftFrontA.write(30);
+    leftMiddleA.write(60);
+    leftBackA.write(90);
+    rightFrontA.write(150);
+    rightMiddleA.write(120);
+    rightBackA.write(90);
+    delay(350);
+}
+
+
+// Step 4: Return to neutral stance
+    leftFrontA.write(60);
+    leftMiddleA.write(90);
+    leftBackA.write(120);
+    rightFrontA.write(120);
+    rightMiddleA.write(90);
+    rightBackA.write(60);
+    delay(300);
 
     // Step 3: Raise the spider back up (reset B servos)
     leftFrontB.write(90);
@@ -535,148 +574,188 @@ if (GamePad.isTrianglePressed()) {
     rightBackB.write(90);
     delay(300);
 
-    // Step 4: Return to neutral stance
-    leftFrontA.write(60);
-    leftMiddleA.write(90);
-    leftBackA.write(120);
-    rightFrontA.write(120);
-    rightMiddleA.write(90);
-    rightBackA.write(60);
 }
 
 
 if (GamePad.isCirclePressed()) {
-    int neutral = 90;
+    int step = 2;
+    int stepDelay = 20; // ~30 steps × 10ms = 300ms
 
-    int frontLowR = 120;
-    int frontLowL = 60;
-
-    int midMidL = 105;
-    int midMidR = 75;
-
-    int backHighL = 25;
-    int backHighR = 155;
-
-    int stepDelay = 10;  // delay between small angle changes
-
-    // ---- FRONT DIP ----
-    for (int i = 90; i <= frontLowR; i++) {
-        rightFrontB.write(i);
-        leftFrontB.write(180 - i);
+    // --- Phase 1: Lift middle-left, front-left, front-right ---
+    for (int i = 0; i <= 45; i += step) {
+        leftMiddleB.write(90 - i);   // 90 -> 45
+        leftFrontB.write(90 + i);               // 90 -> 135
+        rightFrontB.write(90 - i);  // 90 -> 45
         delay(stepDelay);
     }
 
-    // ---- MIDDLE DIP ----
-    for (int i = 90; i <= midMidL; i++) {
-        leftMiddleB.write(i);
-        rightMiddleB.write(180 - i);
+    // --- Phase 2: Drop back-left, back-right, middle-right ---
+    for (int i = 0; i <= 45; i += step) {
+        leftBackB.write(90 + i);                // 90 -> 135
+        rightBackB.write(90 - i);   // 90 -> 45
+        rightMiddleB.write(90 - i); // 90 -> 45
         delay(stepDelay);
     }
 
-    // ---- BACK LIFT ----
-    for (int i = 90; i >= backHighL; i--) {
-        leftBackB.write(i);
-        rightBackB.write(180 - i);
+    // --- Phase 3: Lift back-left, drop front-right ---
+    for (int i = 0; i <= 90; i += step) {
+        leftBackB.write(135 - i);          // 135 -> 45
+        rightFrontB.write(45 + i);         // 45 -> 135
         delay(stepDelay);
     }
 
-    // ---- BACK TO MIDDLE ----
-    for (int i = backHighL; i <= 90; i++) {
-        leftBackB.write(i);
-        rightBackB.write(180 - i);
+    // --- Phase 4: Lift back-right, drop front-left ---
+    for (int i = 0; i <= 90; i += step) {
+        rightBackB.write(45 + i);          // 45 -> 135
+        leftFrontB.write(135 - i);         // 135 -> 45
         delay(stepDelay);
     }
 
-    for (int i = midMidL; i >= 90; i--) {
-        leftMiddleB.write(i);
-        rightMiddleB.write(180 - i);
+    // --- Phase 5: Lift middle-right, drop middle-left ---
+    for (int i = 0; i <= 90; i += step) {
+        rightMiddleB.write(45 + i);        // 60 -> 120
+        leftMiddleB.write(45 + i);        // 60 -> 120
         delay(stepDelay);
     }
 
-    for (int i = frontLowR; i >= 90; i--) {
-        rightFrontB.write(i);
-        leftFrontB.write(180 - i);
+    // --- Phase 6: Lift front-right, drop back-left ---
+    for (int i = 0; i <= 90; i += step) {
+        rightFrontB.write(135 - i);        // 120 -> 60
+        leftBackB.write(45 + i);           // 60 -> 120
         delay(stepDelay);
     }
+
+    // --- Phase 7: Lift front-left, drop back-right ---
+    for (int i = 0; i <= 90; i += step) {
+        leftFrontB.write(45 + i);          // 60 -> 120
+        rightBackB.write(135 - i);         // 120 -> 60
+        delay(stepDelay);
+    }
+
+    // --- Phase 8: Lift middle-right, drop middle-left ---
+    for (int i = 0; i <= 90; i += step) {
+        rightMiddleB.write(135 - i);       // 120 -> 60
+        leftMiddleB.write(135 - i);         // 120 -> 60 
+        delay(stepDelay);
+    }
+
+   // --- Phase 1: Lift middle-left, front-left, front-right ---
+    for (int i = 0; i <= 45; i += step) {
+        leftMiddleB.write(45 + i);   // 60 -> 90
+        leftFrontB.write(135 - i);               // 120 -> 90
+        rightFrontB.write(45 + i);  // 60 -> 90
+        delay(stepDelay);
+    }
+
+    // --- Phase 2: Drop back-left, back-right, middle-right ---
+    for (int i = 0; i <= 45; i += step) {
+        leftBackB.write(135 - i);                // 120 -> 90
+        rightBackB.write(45 + i);   // 60 -> 90
+        rightMiddleB.write(45 + i); // 60 -> 90
+        delay(stepDelay);
+    }
+
+    leftFrontB.write(90);
+    leftMiddleB.write(90);
+    leftBackB.write(90);
+    rightFrontB.write(90);
+    rightMiddleB.write(90);
+    rightBackB.write(90);
+       
 }
-
-
-
 
 
 
 if (GamePad.isSquarePressed()) {
+    int delayTime = 300;
+    int step = 2;
 
-       //lift front leg
-       rightFrontB.write(25);
-       delay(300);
+    // Smoothly lower front and raise back
+    for (int angle = 90; angle <= 120; angle += step) {
+        leftFrontB.write(angle);
+        rightFrontB.write(180 - angle); // mirrored
+        leftBackB.write(angle);
+        rightBackB.write(180 - angle);
+        delay(delayTime / ((120 - 90) / step));
+    }
 
-       //move front leg
-       rightFrontA.write(60);
-       delay(300);
+    // Slide hips backward smoothly
+    for (int angle = 60; angle <= 90; angle += step) {
+        leftFrontA.write(angle);
+        rightFrontA.write(180 - angle);  // mirrored
+        leftMiddleA.write(angle + 30);
+        rightMiddleA.write(180 - (angle + 30));
+        leftBackA.write(angle + 60);
+        rightBackA.write(180 - (angle + 60));
+        delay(delayTime / ((90 - 60) / step));
+    }
 
-       //front leg down
-       rightFrontB.write(90);
-       delay(300);
+    // Return hips to neutral
+    for (int angle = 90; angle >= 60; angle -= step) {
+        leftFrontA.write(angle);
+        rightFrontA.write(180 - angle);
+        leftMiddleA.write(angle + 30);
+        rightMiddleA.write(180 - (angle + 30));
+        leftBackA.write(angle + 60);
+        rightBackA.write(180 - (angle + 60));
+        delay(delayTime / ((90 - 60) / step));
+    }
 
-       //lift front leg
-       leftFrontB.write(155);
-       delay(300);
+    // Reset B servos smoothly
+    for (int angle = 120; angle >= 90; angle -= step) {
+        leftFrontB.write(angle);
+        rightFrontB.write(180 - angle);
+        leftBackB.write(angle);
+        rightBackB.write(180 - angle);
+        delay(delayTime / ((120 - 90) / step));
+    }
 
-       //move front leg
-       leftFrontA.write(120);
-       delay(300);
+    // Reverse the wave — front up, back down
+    for (int angle = 90; angle >= 60; angle -= step) {
+        leftFrontB.write(angle);
+        rightFrontB.write(180 - angle);
+        leftBackB.write(angle);
+        rightBackB.write(180 - angle);
+        delay(delayTime / ((90 - 60) / step));
+    }
 
-       //front leg down
-       leftFrontB.write(90);
-       delay(300);
+    // Slide hips forward smoothly
+    for (int angle = 60; angle >= 30; angle -= step) {
+        leftFrontA.write(angle);
+        rightFrontA.write(180 - angle);
+        leftMiddleA.write(angle + 30);
+        rightMiddleA.write(180 - (angle + 30));
+        leftBackA.write(angle + 60);
+        rightBackA.write(180 - (angle + 60));
+        delay(delayTime / ((60 - 30) / step));
+    }
 
-        // start off on the right foot lift
-        leftMiddleB.write(25);
-        rightBackB.write(155);
-        printf("right foot lift motion");
-        delay(300);
+    // Return hips to neutral again
+    for (int angle = 30; angle <= 60; angle += step) {
+        leftFrontA.write(angle);
+        rightFrontA.write(180 - angle);
+        leftMiddleA.write(angle + 30);
+        rightMiddleA.write(180 - (angle + 30));
+        leftBackA.write(angle + 60);
+        rightBackA.write(180 - (angle + 60));
+        delay(delayTime / ((60 - 30) / step));
+    }
 
-        // move the three legs
-        leftMiddleA.write(120);
-        rightBackA.write(30);            
-        printf("right leg move the leg");
-        delay(300);
-
-        // put the legs down
-        leftMiddleB.write(90);
-        rightBackB.write(90);
-        printf("put the legs down");
-        delay(300);
-        
-// lift the other legs so not dragging ass
-        rightMiddleB.write(155);
-        leftBackB.write(25);
-        delay(300);
-
-        rightMiddleA.write(60);
-        leftBackA.write(150);                  
-        printf("left leg move the leg");
-        delay(300);
-
-        // put the legs down
-        rightMiddleB.write(90);
-        leftBackB.write(90);
-        printf("left leg put the leg down");
-        delay(300);
-       
-      //return to normal
-      leftFrontA.write(60);
-      leftMiddleA.write(90);
-      leftBackA.write(120);
-      rightFrontA.write(120);
-      rightMiddleA.write(90);
-      rightBackA.write(60);
+    // Reset B servos to neutral
+    for (int angle = 60; angle <= 90; angle += step) {
+        leftFrontB.write(angle);
+        rightFrontB.write(180 - angle);
+        leftBackB.write(angle);
+        rightBackB.write(180 - angle);
+        delay(delayTime / ((90 - 60) / step));
+    }
 }
+
+
 }
 
-//CHEATCODE FOR SAJ SWEET CHEEKS
-//WHEN WRITING B SERVOS
+//CHEATCODE FOR WHEN WRITING B SERVOS
+
 //RIGHT BACK AND MIDDLE .write(155) = up
 //LEFT BACK AND MIDDLE .write(25)  = up
 //RIGHT FRONT .write(25) = up
